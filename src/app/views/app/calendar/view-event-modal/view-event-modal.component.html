@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Class summary</h5>
+  <button type="button" class="btn-close" (click)="activeModal.close('by: close icon')" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+  <div class="mb-3">
+    <label for="description" class="form-label">Name</label>
+    <input type="text" class="form-control" id="description" disabled [value]="event.title">
+  </div>
+  <div class="mb-3">
+    <label for="start_date" class="form-label">Start</label>
+    <input type="text" class="form-control" id="start_date" disabled [value]="datePipe.transform(event.start, 'd/M/Y H:mm')">
+  </div>
+  <div class="mb-3">
+    <label for="end_date" class="form-label">End</label>
+    <input type="text" class="form-control" id="end_date" disabled [value]="datePipe.transform(event.end, 'd/M/Y H:mm')">
+  </div>
+  <div class="mb-3">
+    <label for="teacher" class="form-label">Teacher</label>
+    <input type="text" class="form-control" id="teacher" disabled [value]="getTeacher(event)">
+  </div>
+</div>

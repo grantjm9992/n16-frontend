@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Filter classes</h6>
+        <div class="row">
+          <div class="col-md-4">
+            <label class="form-label">Company</label>
+            <ng-select [items]="simpleItems"
+                       bindLabel="name"
+                       bindValue="id"
+                       [multiple]="true"
+                       [searchable]="true"
+                       (change)="filterResources()"
+                       [(ngModel)]="selectedSimpleItem">
+            </ng-select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Classroom name</label>
+            <input type="text" class="form-control" autocomplete="off" [(ngModel)]="classroom" (change)="filterResources()">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Date</label>
+            <div class="input-group">
+              <input class="form-control" placeholder="yyyy-mm-dd"
+                 (dateSelect)="updateDate($event)"
+                 ngbDatepicker #date="ngbDatepicker">
+              <button class="input-group-text" type="button" (click)="date.toggle()">
+                <i class="feather icon-calendar icon-md text-muted"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="form-check form-switch mb-3">
+          <input type="checkbox" class="form-check-input" (change)="toggleScroll()" [(ngModel)]="allowScroll">
+          <label class="form-check-label">Allow scroll</label>
+          </div>
+          <div class="form-check form-switch mb-2" *ngIf="userService.canEditTimetable()">
+            <input type="checkbox" class="form-check-input" (change)="toggleUpdate()">
+            <label class="form-check-label">Update this and future classes</label>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="width: unset; overflow-x: scroll">
+  <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+</div>

@@ -1,0 +1,62 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink=".">Logs</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Log of changes</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title d-flex justify-content-between">
+          Logs
+          <a routerLink="new" class="btn btn-primary" tabindex="-1" role="button">New</a>
+        </h6>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <label>User</label>
+            <ng-select (change)="filter()" [items]="users" bindLabel="name" bindValue="id" [(ngModel)]="selectedUser"></ng-select>
+          </div>
+          <div class="col-12 col-md-6">
+            <label>Search term</label>
+            <div class="row">
+              <div class="col-8">
+                <input type="text" class="form-control" [(ngModel)]="searchTerm">
+              </div>
+              <div class="col-4">
+                <div (click)="filter()" class="btn btn-primary" tabindex="-1" role="button">Search</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="rows"
+            [loadingIndicator]="loadingIndicator"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [limit]="10"
+            rowHeight="auto"
+          >
+            <ngx-datatable-column name="User" prop="user"></ngx-datatable-column>
+            <ngx-datatable-column name="Action" prop="action"></ngx-datatable-column>
+            <ngx-datatable-column name="Entity" prop="entity"></ngx-datatable-column>
+            <ngx-datatable-column name="Updated at" prop="updated_at"></ngx-datatable-column>
+            <ngx-datatable-column name="Original entity">
+              <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                <ngx-json-viewer [json]="{entity: row.original_entity}" [expanded]="false"></ngx-json-viewer>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Updated entity">
+              <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                <ngx-json-viewer [json]="{entity: row.updated_entity}" [expanded]="false"></ngx-json-viewer>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

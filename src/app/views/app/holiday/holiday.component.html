@@ -1,0 +1,64 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink=".">Holidays</a></li>
+    <li class="breadcrumb-item active" aria-current="page">List</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title d-flex justify-content-between">
+          Holiday requests
+          <a routerLink="new" class="btn btn-primary" tabindex="-1" role="button">New</a>
+        </h6>
+        <div class="table-responsive">
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="rows"
+            [loadingIndicator]="loadingIndicator"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [limit]="10"
+            rowHeight="auto"
+          >
+            <ngx-datatable-column name="Teacher" prop="teacher" *ngIf="user.user_role !== 'teacher'">
+              <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex"
+                           ngx-datatable-cell-template>
+                {{ value.name }} {{ value.surname }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Date start" prop="start_date"></ngx-datatable-column>
+            <ngx-datatable-column name="Date end" prop="end_date"></ngx-datatable-column>
+            <ngx-datatable-column name="Status" prop="status"></ngx-datatable-column>
+            <ngx-datatable-column name="Information">
+              <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <button type="button" class="btn btn-primary" placement="start" ngbPopover="{{row.notes}}">
+                  <i class="feather icon-info"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Actions" [sortable]="false" prop="id" *ngIf="user.user_role !== 'teacher'">
+              <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex"
+                           ngx-datatable-cell-template>
+                <button class="btn btn-dark mx-1 mb-1" (click)="accept(row.id)" *ngIf="row.status !== 'accepted'">
+                  Accept
+                </button>
+                <button class="btn btn-dark mx-1 mb-1" (click)="reject(row.id)" *ngIf="row.status === 'pending'">
+                  Reject
+                </button>
+                <button class="btn btn-dark mx-1 mb-1" (click)="revoke(row.id)" *ngIf="row.status === 'accepted'">
+                  Revoke
+                </button>
+                <button class="btn btn-dark mx-1 mb-1" (click)="onRowClicked(row.id)" *ngIf="row.status !== 'accepted'">
+                  Edit
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

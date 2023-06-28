@@ -1,0 +1,124 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink=".">Hours</a></li>
+    <li class="breadcrumb-item active" aria-current="page">List</li>
+  </ol>
+</nav>
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body text-center">
+        <h6 class="card-title">Date range</h6>
+        <ngb-datepicker class="range-selection" #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" [maxDate]="maxDate" outsideDays="hidden">
+        </ngb-datepicker>
+
+        <ng-template #t let-date let-focused="focused">
+        <span class="custom-day"
+              [class.focused]="focused"
+              [class.range]="isRange(date)"
+              [class.faded]="isHovered(date) || isInside(date)"
+              (mouseenter)="hoveredDate = date"
+              (mouseleave)="hoveredDate = null">
+          {{ date.day }}
+        </span>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 grid-margin stretch-card" *ngIf="activeUser.user_role == 'super_admin' || 'admin'">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Filter by company</h6>
+        <ng-select [items]="simpleItems"
+                   bindLabel="name"
+                   bindValue="id"
+                   [searchable]="true"
+                   (change)="filterResources()"
+                   [(ngModel)]="selectedSimpleItem">
+        </ng-select>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Group by</h6>
+        <ng-select [items]="groupByItems"
+                   bindLabel="name"
+                   bindValue="id"
+                   [searchable]="true"
+                   (change)="filterResources()"
+                   [(ngModel)]="groupByItem">
+        </ng-select>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Filter</h6>
+        <input class="form-control wd-150 w-100"
+               type="text"
+               (keyup)="filter($event)"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 grid-margin stretch-card" *ngIf="groupByItem === 'teacher_and_event_type'">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Filter by type of class</h6>
+        <ng-select [items]="eventTypes"
+                   bindLabel="name"
+                   bindValue="name"
+                   [searchable]="true"
+                   (change)="filterRows()"
+                   [(ngModel)]="eventType">
+        </ng-select>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 grid-margin stretch-card" *ngIf="groupByItem === 'teacher_and_department'">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Filter by department</h6>
+        <ng-select [items]="departments"
+                   bindLabel="name"
+                   bindValue="name"
+                   [searchable]="true"
+                   (change)="filterRows()"
+                   [(ngModel)]="department">
+        </ng-select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title d-flex justify-content-between">
+          Teaching hours
+        </h6>
+        <div class="table-responsive">
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="rows"
+            [loadingIndicator]="loadingIndicator"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [limit]="10"
+            rowHeight="auto"
+          >
+            <ngx-datatable-column name="Name" prop="name"></ngx-datatable-column>
+            <ngx-datatable-column name="Surname" prop="surname" *ngIf="groupByItem === 'teacher_and_event_type' || 'teacher'"></ngx-datatable-column>
+            <ngx-datatable-column name="Event type" prop="event_type" *ngIf="groupByItem === 'teacher_and_event_type'"></ngx-datatable-column>
+            <ngx-datatable-column name="Department" prop="department" *ngIf="groupByItem === 'teacher_and_department'"></ngx-datatable-column>
+            <ngx-datatable-column name="Time" prop="time"></ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

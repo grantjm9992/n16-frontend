@@ -1,0 +1,32 @@
+.fc {
+  td {
+    border: 1px solid !important;
+  }
+  .fc-toolbar-title {
+    margin: 0 0 .5rem .5rem !important;
+  }
+}
+
+.fc-view {
+  overflow-x: auto;
+}
+
+.fc-view > table {
+  min-width: 100%;
+  width: 2000px;
+}
+
+.fc-time-grid .fc-slats {
+  z-index: 4;
+  pointer-events: none;
+}
+
+.fc-scroller.fc-time-grid-container {
+  overflow: initial !important;
+}
+
+.fc-axis {
+  position: sticky;
+  left: 0;
+  background: white;
+}

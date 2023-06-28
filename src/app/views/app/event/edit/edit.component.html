@@ -1,0 +1,165 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink=".">Events</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ event === null ? 'New' : 'Edit' }}</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Event</h6>
+        <form class="forms-sample" [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" autocomplete="off" placeholder="Name" formControlName="name" [ngClass]="{'error': form.controls['name'].hasError('error')}">
+                <p class="text-danger" *ngIf="form.controls['name'].errors">{{form.controls['name'].errors.error}}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="name" class="form-label">Event type</label>
+                <ng-select [items]="eventTypes"
+                           bindLabel="name"
+                           bindValue="id"
+                           placeholder="type to search"
+                           (change)="filterDepartments($event)"
+                           [(ngModel)]="eventType"
+                           formControlName="event_type_id">
+                </ng-select>
+                <p class="text-danger" *ngIf="form.controls['event_type_id'].errors">{{form.controls['event_type_id'].errors.error}}</p>
+              </div>
+            </div>
+            <input class="form-control wd-150"
+                   formControlName="company_id"
+                   *ngIf="activeUser.user_role !== 'super_admin' && activeUser.user_role !== 'admin'"
+                   [hidden]="true"
+            />
+            <div class="col-md-6" *ngIf="activeUser.user_role == 'super_admin' || 'admin'">
+              <div class="mb-3">
+                <label for="name" class="form-label">Company</label>
+                <ng-select [items]="companies"
+                           bindLabel="name"
+                           bindValue="id"
+                           (change)="filterSelects()"
+                           [(ngModel)]="selectedSimpleItem"
+                           placeholder="type to search"
+                           formControlName="company_id">
+                </ng-select>
+                <p class="text-danger" *ngIf="form.controls['company_id'].errors">{{form.controls['company_id'].errors.error}}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="name" class="form-label">Classroom</label>
+                <ng-select [items]="classrooms"
+                           bindLabel="name"
+                           bindValue="id"
+                           placeholder="type to search"
+                           formControlName="classroom_id">
+                </ng-select>
+                <p class="text-danger" *ngIf="form.controls['classroom_id'].errors">{{form.controls['classroom_id'].errors.error}}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="name" class="form-label">Teacher</label>
+                <ng-select [items]="teachers"
+                           bindLabel="name"
+                           bindValue="id"
+                           placeholder="type to search"
+                           formControlName="teacher_id">
+                </ng-select>
+                <p class="text-danger" *ngIf="form.controls['teacher_id'].errors">{{form.controls['teacher_id'].errors.error}}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="name" class="form-label">Group</label>
+                <ng-select [items]="groups"
+                           bindLabel="name"
+                           bindValue="id"
+                           (change)="updateName()"
+                           placeholder="type to search"
+                           formControlName="group_id">
+                </ng-select>
+                <!--
+                <select class="form-select" id="group_id" formControlName="group_id">
+                  <option *ngFor="let option of groups" [value]="option.id">{{option.name}}</option>
+                </select>
+                -->
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="name" class="form-label">Department</label>
+                <select class="form-select" id="department_id" formControlName="department_id">
+                  <option *ngFor="let option of departments" [value]="option.id">{{option.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="name" class="form-label">Start date</label>
+                <div class="input-group">
+                  <input class="form-control" placeholder="yyyy-mm-dd" formControlName="date_range_start" ngbDatepicker #date_range_start="ngbDatepicker">
+                  <button class="input-group-text" type="button" (click)="date_range_start.toggle()">
+                    <i class="feather icon-calendar icon-md text-muted"></i>
+                  </button>
+                </div>
+                <p class="text-danger" *ngIf="form.controls['date_range_start'].errors">{{form.controls['date_range_start'].errors.error}}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="name" class="form-label">End date</label>
+                <div class="input-group">
+                  <input class="form-control" [minDate]="form.value.date_range_start" placeholder="yyyy-mm-dd" formControlName="date_range_end" ngbDatepicker #date_range_end="ngbDatepicker">
+                  <button class="input-group-text" type="button" (click)="date_range_end.toggle()">
+                    <i class="feather icon-calendar icon-md text-muted"></i>
+                  </button>
+                </div>
+                <p class="text-danger" *ngIf="form.controls['date_range_end'].errors">{{form.controls['date_range_end'].errors.error}}</p>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label for="name" class="form-label">Days of the week</label>
+                <ng-select [items]="daysOfTheWeek"
+                           [multiple]="true"
+                           bindLabel="name"
+                           bindValue="id"
+                           placeholder="type to search"
+                           formControlName="days_of_the_week">
+                </ng-select>
+                <p class="text-danger" *ngIf="form.controls['days_of_the_week'].errors">{{form.controls['days_of_the_week'].errors.error}}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="name" class="form-label">Start time</label>
+                <ngb-timepicker formControlName="time_start"></ngb-timepicker>
+                <p class="text-danger" *ngIf="form.controls['time_start'].errors">{{form.controls['time_start'].errors.error}}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="name" class="form-label">End time</label>
+                <ngb-timepicker formControlName="time_end"></ngb-timepicker>
+                <p class="text-danger" *ngIf="form.controls['time_end'].errors">{{form.controls['time_end'].errors.error}}</p>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary me-2">Submit</button>
+          <div (click)="onSubmitAndStay()" class="btn btn-inverse-primary me-2">Submit and add similar</div>
+          <div class="btn btn-secondary" routerLink="../">Cancel</div>
+        </form>
+        <p class="text-danger mt-1" *ngFor="let err of error">{{ err }}</p>
+
+      </div>
+    </div>
+  </div>
+</div>

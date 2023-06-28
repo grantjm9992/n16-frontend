@@ -1,0 +1,98 @@
+<div cdkDrag cdkDragRootElement=".modal-content" cdkDragBoundary=".modal">
+
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Edit event</h5>
+  <button type="button" class="btn-close" (click)="activeModal.close('by: close icon')" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+  <aw-wizard>
+    <form class="forms-sample w-100" [formGroup]="form" (ngSubmit)="submitForm()">
+      <aw-wizard-step stepTitle="step 1">
+        <div class="row mb-3">
+          <label for="description" class="col-sm-3 col-form-label">Title</label>
+          <div class="col-12">
+            <input type="text" class="form-control" id="description" formControlName="description">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="start_date" class="col-sm-3 col-form-label">Start</label>
+          <div class="col-12">
+            <input type="text" class="form-control" id="start_date" disabled [value]="form.get('start_date')?.value">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="end_date" class="col-sm-3 col-form-label">End</label>
+          <div class="col-12">
+            <input type="text" class="form-control" id="end_date" disabled [value]="form.get('end_date')?.value">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label">Classroom</label>
+          <div class="col-12">
+            <ng-select [items]="classrooms"
+                       bindLabel="name"
+                       bindValue="id"
+                       placeholder="type to search"
+                       formControlName="classroom_id">
+            </ng-select>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label">Teacher</label>
+          <div class="col-12">
+            <ng-select [items]="teachers"
+                       bindLabel="name"
+                       bindValue="id"
+                       placeholder="type to search"
+                       formControlName="teacher_id">
+            </ng-select>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mt-2">
+          <button class="btn btn-primary" type="button" awNextStep>Continue</button>
+        </div>
+      </aw-wizard-step>
+      <aw-wizard-step stepTitle="finish">
+        <div class="row mb-3">
+          <label class="col-sm-3 col-form-label">Status</label>
+          <div class="col-12">
+            <ng-select [items]="statuses"
+                       bindLabel="name"
+                       bindValue="id"
+                       placeholder="type to search"
+                       formControlName="status_id">
+            </ng-select>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Department</label>
+            <div class="col-12">
+              <ng-select [items]="departments"
+                         bindLabel="name"
+                         bindValue="id"
+                         placeholder="type to search"
+                         formControlName="department_id">
+              </ng-select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Event type</label>
+            <div class="col-12">
+              <ng-select [items]="eventTypes"
+                         bindLabel="name"
+                         bindValue="id"
+                         placeholder="type to search"
+                         formControlName="event_type_id">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mt-2">
+          <button class="btn btn-secondary me-2" type="button" awPreviousStep>Back</button>
+          <button class="btn btn-success me-2" type="submit" (click)="activeModal.dismiss()">Update</button>
+          <button class="btn btn-danger" type="button" (click)="deleteClass()">Delete</button>
+        </div>
+      </aw-wizard-step>
+    </form>
+  </aw-wizard>
+</div>
+</div>

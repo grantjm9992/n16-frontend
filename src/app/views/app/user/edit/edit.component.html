@@ -1,0 +1,64 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink=".">Users</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ user === null ? 'New' : 'Edit' }}</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">User</h6>
+
+        <form class="forms-sample" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" autocomplete="off" placeholder="Name" formControlName="name">
+          </div>
+          <div class="mb-3">
+            <label for="surname" class="form-label">Surname</label>
+            <input type="text" class="form-control" id="surname" autocomplete="off" placeholder="surname" formControlName="surname">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control" id="email" autocomplete="off" placeholder="email" formControlName="email">
+          </div>
+
+          <div class="mb-3">
+            <label for="user_role" class="form-label">User Role</label>
+            <select class="form-select" id="user_role" formControlName="user_role">
+              <option value="super_admin">Super admin</option>
+              <option value="admin">Admin</option>
+              <option value="company_admin">Company admin</option>
+              <option value="teacher">Teacher</option>
+              <option value="director">Director</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="company_id" class="form-label">Company</label>
+            <select class="form-select" id="company_id" formControlName="company_id">
+              <option *ngFor="let option of companies" [value]="option.id">{{option.name}}</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary me-2">Submit</button>
+          <div class="btn btn-secondary" routerLink="../">Cancel</div>
+        </form>
+        <p class="text-danger mt-1" *ngFor="let err of error">{{ err }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Reset password</h6>
+          <div class="mb-3">
+            <label for="name" class="form-label">Reset password</label>
+            <input type="password" class="form-control" id="password" autocomplete="off" [(ngModel)]="password">
+          </div>
+          <button (click)="updatePassword()" class="btn btn-primary me-2">Update password</button>
+      </div>
+    </div>
+  </div>
+</div>
