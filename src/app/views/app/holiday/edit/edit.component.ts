@@ -58,12 +58,17 @@ export class EditComponent implements OnInit {
         start_date: ['', Validators.required],
         end_date: ['', Validators.required],
         absence_type: ['holiday', Validators.required],
+        other_absence_type: '',
         notes: ['',],
       });
     }
     if (this.id !== null && this.id !== 'new') {
       this.holidayApiService.find(this.id).subscribe((response) => {
         this.holiday = response.data;
+        if (this.holiday.absence_type.indexOf('other:') > -1) {
+          this.holiday.other_absence_type = this.holiday.absence_type.slice(7, this.holiday.absence_type.length);
+          this.holiday.absence_type = 'other';
+        }
         this.form.patchValue(response.data);
         console.log(this.holiday.start_date);
         this.form.patchValue({
@@ -79,6 +84,9 @@ export class EditComponent implements OnInit {
     let event = this.form.value;
     event.start_date = this.getDateString(event.start_date);
     event.end_date = this.getDateString(event.end_date);
+    if (event.absence_type === 'other') {
+      event.absence_type = `${event.absence_type}: ${event.other_absence_type}`;
+    }
     if (this.id === 'new') {
       this.holidayApiService.create(event).subscribe(res => {
         this.router.navigate(['/holiday']);

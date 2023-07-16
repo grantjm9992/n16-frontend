@@ -24,6 +24,7 @@
             <label class="form-label">Absence type</label>
             <ng-select [items]="absenceTypes" bindLabel="name" bindValue="id"  formControlName="absence_type">
             </ng-select>
+            <input type="text" class="form-control mt-2 " formControlName="other_absence_type" *ngIf="form.get('absence_type')?.value === 'other'">
           </div>
           <div class="mb-3">
             <label class="form-label">From</label>

@@ -86,7 +86,7 @@ export class HolidayComponent implements OnInit {
       return e.id === absence_type;
     });
     if (match.length === 0) {
-      return '';
+      return absence_type;
     }
     return match[0].name;
   }
