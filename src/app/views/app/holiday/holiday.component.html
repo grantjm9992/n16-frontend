@@ -32,6 +32,11 @@
             <ngx-datatable-column name="Date start" prop="start_date"></ngx-datatable-column>
             <ngx-datatable-column name="Date end" prop="end_date"></ngx-datatable-column>
             <ngx-datatable-column name="Status" prop="status"></ngx-datatable-column>
+            <ngx-datatable-column name="Absence type" prop="absence_type">
+              <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                {{ getAbsenceType(row.absence_type) }}
+              </ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column name="Information">
               <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
                 <button type="button" class="btn btn-primary" placement="start" ngbPopover="{{row.notes}}">

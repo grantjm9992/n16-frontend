@@ -62,18 +62,6 @@ export const MENU: MenuItem[] = [
     profiles: ['super_admin'],
   },
   {
-    label: 'Companies',
-    icon: 'briefcase',
-    link: '/company',
-    profiles: ['super_admin'],
-  },
-  {
-    label: 'Event Types',
-    icon: 'tag',
-    link: '/event-type',
-    profiles: ['super_admin'],
-  },
-  {
     label: 'Events',
     icon: 'check-circle',
     profiles: ['super_admin', 'admin', 'company_admin'],
@@ -82,7 +70,17 @@ export const MENU: MenuItem[] = [
         label: 'Add event (s)',
         link: '/event/new',
         profiles: ['super_admin', 'admin', 'company_admin'],
-      }
+      },
+      {
+        label: 'Suspend events',
+        link: '/event',
+        profiles: ['super_admin'],
+      },
+      {
+        label: 'Event Types',
+        link: '/event-type',
+        profiles: ['super_admin'],
+      },
       /*
       {
         label: 'Modify group events',
@@ -92,16 +90,26 @@ export const MENU: MenuItem[] = [
     ]
   },
   {
-    label: 'Departments',
+    label: 'Organisation',
     icon: 'folder',
-    link: '/department',
     profiles: ['super_admin'],
-  },
-  {
-    label: 'Classrooms',
-    icon: 'book',
-    link: '/classroom',
-    profiles: ['super_admin'],
+    subItems: [
+      {
+        label: 'Departments',
+        link: '/department',
+        profiles: ['super_admin'],
+      },
+      {
+        label: 'Classrooms',
+        link: '/classroom',
+        profiles: ['super_admin'],
+      },
+      {
+        label: 'Companies',
+        link: '/company',
+        profiles: ['super_admin'],
+      },
+    ]
   },
   {
     label: 'Holidays',
@@ -118,7 +126,18 @@ export const MENU: MenuItem[] = [
   {
     label: 'Logs',
     icon: 'list',
-    link: '/logs',
     profiles: ['super_admin'],
-  },
+    subItems: [
+      {
+        label: 'Log history',
+        link: '/logs',
+        profiles: ['super_admin'],
+      },
+      {
+        label: 'Event change logs',
+        link: '/event-logs',
+        profiles: ['super_admin'],
+      },
+    ]
+  }
 ];

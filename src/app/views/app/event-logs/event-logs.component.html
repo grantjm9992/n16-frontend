@@ -1,0 +1,72 @@
+<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink=".">Event logs</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Log of event changes</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title d-flex justify-content-between">
+                    Logs
+                </h6>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label>User search</label>
+                            <input type="text" class="form-control" [(ngModel)]="userSearch">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label>Teacher search</label>
+                            <input type="text" class="form-control" [(ngModel)]="teacherSearch">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label>Name search</label>
+                            <input type="text" class="form-control" [(ngModel)]="nameSearch">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label>Event date</label>
+                            <div class="input-group">
+                                <input class="form-control" placeholder="yyyy-mm-dd"
+                                       name="start_date" ngbDatepicker [(ngModel)]="dateSearch" #date="ngbDatepicker">
+                                <button class="input-group-text" type="button" (click)="date.toggle()">
+                                    <i class="feather icon-calendar icon-md text-muted"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div (click)="filter()" class="btn btn-primary mt-2 mb-2" tabindex="-1" role="button">Search</div>
+                <div class="table-responsive">
+                    <ngx-datatable
+                            class="bootstrap"
+                            [rows]="rows"
+                            [loadingIndicator]="loadingIndicator"
+                            [columnMode]="ColumnMode.force"
+                            [footerHeight]="50"
+                            [limit]="10"
+                            rowHeight="auto"
+                    >
+                        <ngx-datatable-column name="User" prop="user"></ngx-datatable-column>
+                        <ngx-datatable-column name="Date changed" prop="date_changed"></ngx-datatable-column>
+                        <ngx-datatable-column name="Name" prop="name"></ngx-datatable-column>
+                        <ngx-datatable-column name="Original teacher" prop="original_teacher"></ngx-datatable-column>
+                        <ngx-datatable-column name="New teacher" prop="new_teacher"></ngx-datatable-column>
+                        <ngx-datatable-column name="Original classroom" prop="original_classroom"></ngx-datatable-column>
+                        <ngx-datatable-column name="New classroom" prop="new_classroom"></ngx-datatable-column>
+                        <ngx-datatable-column name="Original start" prop="original_start_date"></ngx-datatable-column>
+                        <ngx-datatable-column name="New start" prop="new_start_date"></ngx-datatable-column>
+                    </ngx-datatable>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

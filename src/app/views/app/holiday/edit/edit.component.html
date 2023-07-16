@@ -20,6 +20,11 @@
               </ng-template>
             </ng-select>
           </div>
+          <div class="mb-3" *ngIf="activeUser.user_role !== 'teacher'">
+            <label class="form-label">Absence type</label>
+            <ng-select [items]="absenceTypes" bindLabel="name" bindValue="id"  formControlName="absence_type">
+            </ng-select>
+          </div>
           <div class="mb-3">
             <label class="form-label">From</label>
             <div class="input-group">

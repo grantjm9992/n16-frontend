@@ -5,6 +5,7 @@ import {CompanyApiService} from "../../../../core/services/company.api.service";
 import {TeacherApiService} from "../../../../core/services/teacher.api.service";
 import {UserService} from "../../../../core/services/user.service";
 import {DatePipe} from "@angular/common";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-edit',
@@ -92,7 +93,20 @@ export class EditComponent implements OnInit {
     })
   }
 
-  delete() {
+  delete(): void {
+    Swal.fire({
+      icon: "question",
+      title: "Are you sure?",
+      text: "Are you sure you wish to delete this teacher? Doing so is an irreversible change.",
+      showCancelButton: true
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.onDelete();
+      }
+    });
+  }
+
+  onDelete(): void {
     if (this.user.id) {
       this.teacherApiService.deleteTeacher(this.user.id, (new Date()).toDateString()).subscribe(res => {
         this.router.navigate(['/teacher']);

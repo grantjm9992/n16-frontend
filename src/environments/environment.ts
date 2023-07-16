@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // baseApiUrl: 'https://timetable.number16.com/api',
-  baseApiUrl: 'http://localhost/api',
+  baseApiUrl: 'https://timetable.number16.com/api',
+  // baseApiUrl: 'http://localhost/api',
 };
 
 /*

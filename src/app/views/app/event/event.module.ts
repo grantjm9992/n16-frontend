@@ -8,11 +8,13 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {NgbDatepickerModule, NgbTimepickerModule} from "@ng-bootstrap/ng-bootstrap";
 import { ModifyGroupEventComponent } from './modify-group-event/modify-group-event.component';
+import {SuperAdminGuard} from "../../../core/guard/super-admin.guard";
 
 const routes: Routes = [
   {
     path: '',
     component: EventComponent,
+    canActivate: [SuperAdminGuard]
   },
   {
     path: ':id',

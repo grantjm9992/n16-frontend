@@ -17,6 +17,22 @@ export class HolidayComponent implements OnInit {
   reorderable = true;
   ColumnMode = ColumnMode;
   user: any;
+  public absenceTypes = [{
+    id: 'holiday',
+    name: 'Holiday'
+  }, {
+    id: 'short_term_medical_leave',
+    name: 'Short term medical leave'
+  }, {
+    id: 'short_term_medical_leave',
+    name: 'Short term medical leave'
+  }, {
+    id: 'work_absence',
+    name: 'Work absence'
+  }, {
+    id: 'unjustified',
+    name: 'Unjustified'
+  }];
 
   constructor(
     private holidayApiService: HolidayApiService,
@@ -63,5 +79,15 @@ export class HolidayComponent implements OnInit {
 
   onRowClicked(id: string) {
     this.router.navigate([id], { relativeTo: this.activatedRoute });
+  }
+
+  getAbsenceType(absence_type: string): string {
+    let match = this.absenceTypes.filter(e => {
+      return e.id === absence_type;
+    });
+    if (match.length === 0) {
+      return '';
+    }
+    return match[0].name;
   }
 }

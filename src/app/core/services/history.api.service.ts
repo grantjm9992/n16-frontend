@@ -10,4 +10,8 @@ export class HistoryApiService extends AbstractApiService {
   getUrl(): string {
     return "/history-log";
   }
+
+  getEventLogs(query_string: string = ''): Observable<any> {
+    return this.get(`${this.getUrl()}/event?${query_string}`);
+  }
 }

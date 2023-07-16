@@ -60,4 +60,8 @@ export class EventApiService extends ApiService {
   getEventTypes(): Observable<any> {
     return this.get('/event-type');
   }
+
+  suspendForDay(companyId: string, date: string): Observable<any> {
+    return this.post(`/events/suspend-events/${companyId}/${date}`)
+  }
 }

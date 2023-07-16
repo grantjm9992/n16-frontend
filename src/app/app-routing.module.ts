@@ -85,6 +85,11 @@ const routes: Routes = [
         loadChildren: () => import('./views/app/logs/logs.module').then(m => m.LogsModule),
         canActivate: [],
       },
+      {
+        path: 'event-logs',
+        loadChildren: () => import('./views/app/event-logs/event-logs.module').then(m => m.EventLogsModule),
+        canActivate: [],
+      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ]
   },

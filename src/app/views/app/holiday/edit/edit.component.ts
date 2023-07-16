@@ -5,6 +5,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {TeacherApiService} from "../../../../core/services/teacher.api.service";
 import {UserService} from "../../../../core/services/user.service";
 import {DatePipe} from "@angular/common";
+import {Observable, of} from "rxjs";
+import {AbsenceTypeService} from "../../../../core/services/absence-type.service";
+import {AbsenceType} from "../../../../core/data/absence-types.data";
 
 @Component({
   selector: 'app-edit',
@@ -13,12 +16,14 @@ import {DatePipe} from "@angular/common";
 })
 export class EditComponent implements OnInit {
 
+  private absenceType: string = '';
   teachers: any[] = [];
   form: FormGroup;
   error: any[] = [];
   id: any;
   holiday: any;
   activeUser: any;
+  public absenceTypes: AbsenceType[];
 
   constructor(
     private userService: UserService,
@@ -27,10 +32,15 @@ export class EditComponent implements OnInit {
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private absenceTypesService: AbsenceTypeService
   ) { }
 
   ngOnInit(): void {
+    this.absenceType = '';
+    this.absenceTypesService.get().subscribe(res => {
+      this.absenceTypes = res;
+    });
     this.activeUser = this.userService.getUser();
     this.teacherApiService.getTeachers().subscribe(res => {
       this.teachers = res.data;
@@ -47,6 +57,7 @@ export class EditComponent implements OnInit {
         teacher_id: [null, Validators.required],
         start_date: ['', Validators.required],
         end_date: ['', Validators.required],
+        absence_type: ['holiday', Validators.required],
         notes: ['',],
       });
     }
@@ -127,5 +138,9 @@ export class EditComponent implements OnInit {
       month: month ,
       day: day
     };
+  }
+
+  addAbsenceType(value: any): void {
+
   }
 }

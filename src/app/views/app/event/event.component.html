@@ -1,4 +1,39 @@
-<h6 class="card-title d-flex justify-content-between">
-  Events
-  <a routerLink="new" class="btn btn-primary" tabindex="-1" role="button">New</a>
-</h6>
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active"><a routerLink=".">Events</a></li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Suspend classes by academy and date</h6>
+          <div class="row">
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Company</label>
+                <ng-select [items]="companies" [(ngModel)]="company_id" bindLabel="name" bindValue="id"></ng-select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Date</label>
+                <div class="input-group">
+                  <input class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker #date="ngbDatepicker" (dateSelect)="dateChange($event);">
+                  <button class="input-group-text" type="button" (click)="date.toggle()">
+                    <i class="feather icon-calendar icon-md text-muted"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          <button type="submit" (click)="onSubmit()" class="btn btn-primary me-2">Submit</button>
+          </div>
+        <p class="text-danger mt-1" *ngFor="let err of error">{{ err }}</p>
+      </div>
+    </div>
+  </div>
+</div>
