@@ -13,6 +13,14 @@
           Holiday requests
           <a routerLink="new" class="btn btn-primary" tabindex="-1" role="button">New</a>
         </h6>
+        <div class="row">
+          <div class="col-12">
+            <input class="form-control wd-150"
+                   type="text"
+                   (keyup)="filter($event)"
+            />
+          </div>
+        </div>
         <div class="table-responsive">
           <ngx-datatable
             class="bootstrap"

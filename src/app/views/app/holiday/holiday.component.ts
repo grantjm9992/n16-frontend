@@ -12,6 +12,7 @@ import {UserService} from "../../../core/services/user.service";
 })
 export class HolidayComponent implements OnInit {
 
+  filteredRows: [] = [];
   rows = [];
   loadingIndicator = true;
   reorderable = true;
@@ -51,6 +52,7 @@ export class HolidayComponent implements OnInit {
     this.loadingIndicator = true;
     this.holidayApiService.getAll().subscribe((response) => {
       this.rows = response.data;
+      this.filteredRows = response.data;
       this.loadingIndicator = false;
     });
   }
@@ -75,6 +77,21 @@ export class HolidayComponent implements OnInit {
     this.holidayApiService.revoke(id).subscribe((res: any) => {
       this.loadData();
     });
+  }
+
+  filter(event: any) {
+    let val = event.target.value.toLowerCase();
+    this.rows = this.filteredRows.filter((item: any)  => {
+      return this.getString(item).indexOf(val) !== -1;
+    });
+  }
+
+  getString(item: any): string {
+    let string = `${item.name.toString().toLowerCase()} `;
+    if (item.surname) {
+      string += `${item.surname.toString().toLowerCase()}`;
+    }
+    return string;
   }
 
   onRowClicked(id: string) {
