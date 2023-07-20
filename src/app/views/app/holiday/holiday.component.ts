@@ -87,9 +87,10 @@ export class HolidayComponent implements OnInit {
   }
 
   getString(item: any): string {
-    let string = `${item.name.toString().toLowerCase()} `;
-    if (item.surname) {
-      string += `${item.surname.toString().toLowerCase()}`;
+    let string = '';
+    if (item.teacher) {
+      string += `${item.teacher.name.toString().toLowerCase()} `;
+      string += `${item.teacher.surname.toString().toLowerCase()}`;
     }
     return string;
   }
